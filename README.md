@@ -7,7 +7,7 @@ Simple entity component system library wtitten in C#
 ```cs
 public struct Position : IComponent {
 
-    public float X;
+	public float X;
 	public float Y;
 	
 	public Position(float x, float y) {
@@ -19,7 +19,7 @@ public struct Position : IComponent {
 
 public struct Velocity : IComponent {
 
-    public float X;
+	public float X;
 	public float Y;
 	
 	public Position(float x, float y) {
