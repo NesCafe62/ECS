@@ -45,6 +45,8 @@ public struct Decay : IComponent {
 You can inject multiple ComponentGroups. Also injecting of ComponentLists is available.
 
 Remember that your components are struct's so any modification should be performed on `ComponentsList.Elements` array directly, or by ref in delegate functions. (There are ref variables implemented since .Net 7 which could help. But I wanted to have compatibility with older .Net versions)
+
+There are also entity added/removed events for ComponentGroup
 ```cs
 public class MovementSystem : ComponentSystem {
 	
@@ -77,6 +79,19 @@ public class DecaySystem : ComponentSystem {
 	protected ComponentGroup<Decay> Entities;
 	
 	private double time;
+	
+	protected override void OnInit() {
+		Entities.SubscribeEntityAdd(OnEntityAdd);
+		Entities.SubscribeEntityRemove(OnEntityRemove);
+	}
+	
+	protected void OnEntityAdd(Entity entity) {
+		// Entity with Decay component added
+	}
+	
+	protected void OnEntityAdd(Entity entity) {
+		// Entity with Decay component removed
+	}
 	
 	public void Update(double dTime) {
 		time += dTime;
