@@ -34,7 +34,7 @@ public struct Decay : IComponent {
 	public double Time;
 	
 	public Position(double time) {
-		time = Time;
+		Time = time;
 	}
 
 }
