@@ -94,22 +94,22 @@ public class DecaySystem : ComponentSystem {
 ```cs
 public class World {
 	
-	EntityManager entities = new EntityManager();
+	private EntityManager manager = new EntityManager();
 
-	MovementSystem movementSystem;
-	DecaySystem decaySystem;
+	private MovementSystem movementSystem;
+	private DecaySystem decaySystem;
 
 	public World() {
-		movementSystem = entities.AddSystem(new MovementSystem());
-		decaySystem = entities.AddSystem(new DecaySystem());
+		movementSystem = manager.AddSystem(new MovementSystem());
+		decaySystem = manager.AddSystem(new DecaySystem());
 		
 		var entity1 = CreateEntity(5, 5, 0, 0);
 		var entity2 = CreateEntity(5, 10, 1.5f, -0.5f);
-		Manager.AddComponent(entity2, new Decay(10));
+		manager.AddComponent(entity2, new Decay(10));
 	}
 	
 	public Entity CreateEntity(float posX, float posY, float velocityX = 0, float velocityY = 0) {
-		return Manager.Create(
+		return manager.Create(
 			new Position(posX, posY),
 			new Veclocity(velocityX, velocityY)
 		);
