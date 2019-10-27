@@ -91,7 +91,7 @@ public class DecaySystem : ComponentSystem {
 		// Entity with Decay component added
 	}
 	
-	protected void OnEntityAdd(Entity entity) {
+	protected void OnEntityRemove(Entity entity) {
 		// Entity with Decay component removed
 	}
 	
