@@ -43,7 +43,8 @@ public struct Decay : IComponent {
 ## Define Systems
 
 You can inject multiple ComponentGroups. Also injecting of ComponentLists is available.
-Remember that your components are struct's so any modification should be performed on ComponentsList.Elements array directly, or by ref in delegate functions. (There are ref variables implemented since .Net 7 which could help. But I wanted to have compatibility with older .Net versions)
+
+Remember that your components are struct's so any modification should be performed on `ComponentsList.Elements` array directly, or by ref in delegate functions. (There are ref variables implemented since .Net 7 which could help. But I wanted to have compatibility with older .Net versions)
 ```cs
 public class MovementSystem : ComponentSystem {
 	
