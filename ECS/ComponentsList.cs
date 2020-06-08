@@ -5,6 +5,8 @@ namespace ECS {
 	public interface IComponentsList {
 	
 		void SetComponent(Entity entity, IComponent component);
+		
+		IComponent GetComponent(Entity entity);
 	
 	}
 
@@ -25,6 +27,10 @@ namespace ECS {
 				Array.Resize(ref Elements, size);
 			}
 			Elements[id] = (TComponent) component;
+		}
+		
+		public IComponent GetComponent(Entity entity) {
+			return (IComponent) Elements[entity.Id];
 		}
 
 	}

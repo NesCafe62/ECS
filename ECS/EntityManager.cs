@@ -120,9 +120,9 @@ namespace ECS {
 
 				IComponentsList componentsList;
 				if (!componentLists.TryGetValue(componentType, out componentsList)) {
-					componentsList = Activator.CreateInstance(
+					componentsList = (IComponentsList) Activator.CreateInstance(
 						typeof(ComponentsList<>).MakeGenericType(componentType)
-					) as IComponentsList;
+					);
 					componentLists.Add(componentType, componentsList);
 				}
 				
@@ -168,7 +168,7 @@ namespace ECS {
 				entityComponents.Remove(componentType);
 
 				// clear component data
-				componentLists[componentType].SetComponent(entity, Activator.CreateInstance(componentType) as IComponent);
+				componentLists[componentType].SetComponent(entity, (IComponent) Activator.CreateInstance(componentType));
 				
 				foreach (var group in componentGroups) {
 					if (!IsComponentTypesMatchGroup(entityComponents, group.Key)) {
@@ -192,7 +192,7 @@ namespace ECS {
 			Type componentType = typeof(TComponent);
 			
 			if (!entityComponentTypes[entity].Contains(componentType)) {
-				throw new KeyNotFoundException(String.Format("Entity component \"{0}\" does not exist", componentType));
+				throw new KeyNotFoundException(String.Format("Entity \"{0}\" component doesn't exist", componentType));
 			}
 
 			var componentsList = (ComponentsList<TComponent>) componentLists[componentType];
@@ -203,11 +203,17 @@ namespace ECS {
 			Type componentType = typeof(TComponent);
 
 			if (!entityComponentTypes[entity].Contains(componentType)) {
-				throw new KeyNotFoundException(String.Format("Entity component \"{0}\" does not exist", componentType));
+				throw new KeyNotFoundException(String.Format("Entity \"{0}\" component doesn't exist", componentType));
 			}
 
 			var componentsList = (ComponentsList<TComponent>) componentLists[componentType];
 			componentsList.Elements[entity.Id] = component;
+		}
+
+		public IComponent[] GetComponents(Entity entity) {
+			return entityComponentTypes[entity]
+				.Select( componentType => componentLists[componentType].GetComponent(entity) )
+				.ToArray();
 		}
 
 		private bool IsComponentTypesMatchGroup(HashSet<Type> componentTypes, ComponentGroupKey groupKey) {
