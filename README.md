@@ -123,6 +123,24 @@ public class World {
 		var entity1 = CreateEntity(5, 5, 0, 0);
 		var entity2 = CreateEntity(5, 10, 1.5f, -0.5f);
 		manager.AddComponent(entity2, new Decay(10));
+
+		// Multiple components adding is also allowed
+		// manager.AddComponents(entity1, new Decay(10), new OtherComponent());
+
+		// Removing component. Component groups will update automatically
+		// manager.RemoveComponent<Decay>(entity2);
+		
+		// Checking if entity has a component. Entity can have only one component of each type
+		// manager.HasComponent<Decay>();
+		
+		// Getting the component. But faster way is to retreive via injected ComponentsList's
+		// var position = manager.GetComponent<Position>(entity1);
+
+		// Add entity to destroy queue. Need later perform deletion by manager.UpdateDestroyed()
+		// manager.Destroy(entity2);
+		
+		// Also can call DestroyImmediate, but deleting in batch causes less component group updates
+		// manager.DestroyImmediate(entity2);
 	}
 	
 	public Entity CreateEntity(float posX, float posY, float velocityX = 0, float velocityY = 0) {
