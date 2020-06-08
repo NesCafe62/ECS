@@ -137,6 +137,10 @@ public class World {
 		
 		// Get entity component. But faster way is to retreive via injected ComponentsList
 		// var position = manager.GetComponent<Position>(entity2);
+		
+		// Setting (replacing) entity component. It will only succeed if entity already have component of that type,
+		// because this method don't run any ComponentGroup's updates
+		// manager.SetComponent(entity2, new Position(10, 10));
 
 		// Add entity to destroy queue. Need later perform deletion by calling manager.UpdateDestroyed()
 		// manager.Destroy(entity2);
