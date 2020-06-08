@@ -135,6 +135,7 @@ public class World {
 	public void Update(double dTime) {
 		movementSystem.Update();
 		decaySystem.Update(dTime);
+		manager.UpdateDestroyed();
 	}
 
 }
