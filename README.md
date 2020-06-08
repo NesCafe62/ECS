@@ -42,11 +42,13 @@ public struct Decay : IComponent {
 
 ## Define Systems
 
-You can inject multiple ComponentGroups. Also injecting of ComponentLists is available.
-
-ComponentGroups can consist of up to 6 components.
+You can inject multiple ComponentGroup's. Also injecting of ComponentsList's is available.
 
 Remember that your components are struct's so any modification should be performed on `ComponentsList.Elements` array directly, or by ref in delegate functions. (There are ref variables implemented since .Net 7 which could help. But I wanted to have compatibility with older .Net versions)
+
+ComponentGroup's can consist of up to 6 components.
+They will contain all entities that have components of given types (same time entity can have more components of other types).
+ComponentGroup's are updated automatically whenever entities for EntityManager get added/removed or entity components added/removed.
 
 There are also entity added/removed events for ComponentGroup
 ```cs
@@ -124,22 +126,22 @@ public class World {
 		var entity2 = CreateEntity(5, 10, 1.5f, -0.5f);
 		manager.AddComponent(entity2, new Decay(10));
 
-		// Multiple components adding is also allowed
+		// Add multiple components
 		// manager.AddComponents(entity1, new Decay(10), new OtherComponent());
 
-		// Removing component. Component groups will update automatically
+		// Remove component
 		// manager.RemoveComponent<Decay>(entity2);
 		
-		// Checking if entity has a component. Entity can have only one component of each type
-		// manager.HasComponent<Decay>();
+		// Check if entity has a component. Entity can have only one component of each type
+		// manager.HasComponent<Decay>(entity2);
 		
-		// Getting the component. But faster way is to retreive via injected ComponentsList's
-		// var position = manager.GetComponent<Position>(entity1);
+		// Get entity component. But faster way is to retreive via injected ComponentsList
+		// var position = manager.GetComponent<Position>(entity2);
 
-		// Add entity to destroy queue. Need later perform deletion by manager.UpdateDestroyed()
+		// Add entity to destroy queue. Need later perform deletion by calling manager.UpdateDestroyed()
 		// manager.Destroy(entity2);
 		
-		// Also can call DestroyImmediate, but deleting in batch causes less component group updates
+		// Destroy entity immediately. But queueing delete cause less ComponentGroup's updates
 		// manager.DestroyImmediate(entity2);
 	}
 	
