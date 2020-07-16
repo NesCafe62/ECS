@@ -30,7 +30,7 @@ namespace ECS {
 		}
 		
 		public IComponent GetComponent(Entity entity) {
-			return (IComponent) Elements[entity.Id];
+			return Elements[entity.Id];
 		}
 
 	}
