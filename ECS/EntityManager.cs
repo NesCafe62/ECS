@@ -64,8 +64,8 @@ namespace ECS {
 
 		// todo: re-index entities Id when nextId is close to limit
 		public Entity Create() {
-			if (nextId >= Int32.MaxValue) {
-				throw new GameException(String.Format("Maximum entities Id \"{0}\" exceeded", Int32.MaxValue));
+			if (nextId >= int.MaxValue) {
+				throw new InvalidOperationException(String.Format("Maximum entities Id \"{0}\" exceeded", int.MaxValue));
 			}
 			Entity entity = new Entity(nextId++);
 			entityComponentTypes.Add(entity, new HashSet<Type>());
