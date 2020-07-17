@@ -54,6 +54,7 @@ There are also entity added/removed events for ComponentGroup
 ```cs
 public class MovementSystem : ComponentSystem {
 	
+	// Note: using protected instead of private for injected fields is a way to get rid of annoying "Field is never assigned" warning
 	[Inject]
 	protected ComponentGroup<Position, Velocity> Entities;
 	
