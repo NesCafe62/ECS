@@ -5,7 +5,7 @@ Simple entity component system library wtitten in C#
 
 ## Define components
 ```cs
-public struct Position : IComponent {
+public struct PositionComponent : IComponent {
 
 	public float X;
 	public float Y;
@@ -17,7 +17,7 @@ public struct Position : IComponent {
 
 }
 
-public struct Velocity : IComponent {
+public struct VelocityComponent : IComponent {
 
 	public float X;
 	public float Y;
@@ -29,7 +29,7 @@ public struct Velocity : IComponent {
 
 }
 
-public struct Decay : IComponent {
+public struct DecayComponent : IComponent {
 	
 	public double Time;
 	
@@ -55,24 +55,33 @@ There are also entity added/removed events for ComponentGroup
 public class MovementSystem : ComponentSystem {
 	
 	[Inject]
-	protected ComponentGroup<Position, Velocity> Entities;
+	protected ComponentGroup<PositionComponent, VelocityComponent> Entities;
 	
 	[Inject]
-	protected ComponentsList<Position> Positions;
+	protected ComponentsList<PositionComponent> Positions;
 	
 	public void Update() {
-		Entities.Each(( Entity entity, ref Position position, ref Velocity velocity) => {
+		Entities.Each(( Entity entity, ref PositionComponent position, ref VelocityComponent velocity) => {
 			position.X += Velocity.X;
 			position.Y += Velocity.Y;
 		});
 	}
 	
-	public Position GetPosition(Entity entity) {
+	public PositionComponent GetPosition(Entity entity) {
 		if (!Entities.HasEntity(entity)) {
-			// or !Manager.HasComponent<Position>(entity) if you have no ComponentGroup with that component
-			throw new Exception("Entity \"Position\" component doesn't exist");
+			// or !Manager.HasComponent<PositionComponent>(entity) if you have no ComponentGroup with that component
+			throw new Exception("Entity \"PositionComponent\" component doesn't exist");
 		}
 		return Positions.Elements[entity.Id];
+	}
+	
+	public VelocityComponent GetVelocity(Entity entity) {
+		if (!Entities.HasEntity(entity)) {
+			throw new Exception("Entity \"VelocityComponent\" component doesn't exist");
+		}
+		// Another way of getting component but not so efficient.
+		// Keep in mind it will return default value struct if entity has no component of that type
+		return Manager.GetComponent<VelocityComponent>(entity);
 	}
 
 }
