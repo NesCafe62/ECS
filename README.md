@@ -78,15 +78,6 @@ public class MovementSystem : ComponentSystem {
 		return Positions.Elements[entity.Id];
 	}
 	
-	public Velocity GetVelocity(Entity entity) {
-		if (!Entities.HasEntity(entity)) {
-			throw new Exception("Entity \"Velocity\" component doesn't exist");
-		}
-		// Another way of getting component but not so efficient.
-		// Keep in mind it will return default value struct if entity has no component of that type
-		return Manager.GetComponent<Velocity>(entity);
-	}
-
 }
 
 public class DecaySystem : ComponentSystem {
